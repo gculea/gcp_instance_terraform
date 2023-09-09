@@ -9,7 +9,7 @@ Google Cloud SDK: Ensure that you have the Google Cloud SDK installed and initia
 
 Terraform: Ensure that you have Terraform installed. You can find installation instructions [[here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)].
 
-Service Account Key: The xxxxx.json file contains the credentials of the service account used to deploy the resources. Ensure you have the correct permissions set for this service account. Add your into a local file your Service Account Key json file.
+Service Account Key: The xxxxx.json file contains the credentials of the service account used to deploy the resources. Ensure you have the correct permissions set for this service account. Add your into a local file your Compute Engine service account Key json file.
 
 SSH Key: This script uses the SSH key located at ~/.ssh/id_rsa.pub. Ensure that the private key associated with this public key is available on the system from which you will connect to the VMs.
 
