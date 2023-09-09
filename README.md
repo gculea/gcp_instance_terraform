@@ -9,7 +9,7 @@ Google Cloud SDK: Ensure that you have the Google Cloud SDK installed and initia
 
 Terraform: Ensure that you have Terraform installed. You can find installation instructions [[here](https://developer.hashicorp.com/terraform/tutorials/aws-get-started/install-cli)].
 
-Service Account Key: The xxxxx.json file contains the credentials of the service account used to deploy the resources. Ensure you have the correct permissions set for this service account. Add your Service Account Key file.
+Service Account Key: The xxxxx.json file contains the credentials of the service account used to deploy the resources. Ensure you have the correct permissions set for this service account. Add your into a local file your Service Account Key json file.
 
 SSH Key: This script uses the SSH key located at ~/.ssh/id_rsa.pub. Ensure that the private key associated with this public key is available on the system from which you will connect to the VMs.
 
@@ -41,5 +41,8 @@ Variables
  * vm_flavor: The machine type for the VMs (Default is set in variables.tf)
  * vm_image: The OS image for the VMs (Default is set in variables.tf)
 
-Output
+Output 
 admin_passwords: Sensitive data, holds the passwords for each VM. Use 'terraform output admin_passwords' to access the passwords after setting it as sensitive.
+
+Notes
+The script sets up a test to check network connectivity between the VMs and logs the results in the VMs' /tmp/ directory. After all VMs are up, it aggregates the ping test results into a local file named aggregated_ping_results.txt.
