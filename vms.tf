@@ -2,7 +2,7 @@ resource "google_compute_instance" "default" {
   count        = var.number_of_vms
   name         = "vm-${count.index}"
   machine_type = var.vm_flavor
-  zone         = "us-central1-a" 
+  zone         = "us-central1-a"
 
   boot_disk {
     initialize_params {
@@ -20,7 +20,7 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    "ssh-keys" = "gculea:${file("~/.ssh/id_rsa.pub")}"
+    "ssh-keys" = "your-user:${file("~/.ssh/id_rsa.pub")}"
     password  = random_password.password[count.index].result
   }
 
