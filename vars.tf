@@ -1,5 +1,5 @@
 provider "google" {
-  credentials = file("mgccloud-c3b18a7dd9ab.json")
+  credentials = file("mgccloud-c3b18a7dd9ab.json") # Change with your gcp Service Account Key
   project     = "mgccloud" # Change to your gcp project
   region      = "europe-west1"  # Change to your desired region
 }
