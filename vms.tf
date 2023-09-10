@@ -20,19 +20,29 @@ resource "google_compute_instance" "default" {
   }
 
   metadata = {
-    "ssh-keys" = "your-user:${file("~/.ssh/id_rsa.pub")}"
     password  = random_password.password[count.index].result
   }
 
   metadata_startup_script = <<-EOT
   #!/bin/bash
-  ping_result=$(ping -c 4 vm-$(((${count.index}+1))) | grep 'received' | awk -F',' '{ print $2 }' | awk '{ print $1 }')
-  if [ $ping_result -eq 0 ]; then
-    echo "Ping from vm-${count.index} to vm-$(((${count.index}+1))) failed" > /tmp/ping_result_vm-${count.index}.txt
+  TARGET_VM_INDEX=""
+  if [ $((${count.index} % ${var.number_of_vms})) -eq 0 ]; then
+      TARGET_VM_INDEX=$((${count.index} + 1))
   else
-    echo "Ping from vm-${count.index} to vm-$(((${count.index}+1))) passed" > /tmp/ping_result_vm-${count.index}.txt
+      TARGET_VM_INDEX=$((${count.index} - 1))
+  fi
+
+  ping_result=$(ping -c 4 vm-$TARGET_VM_INDEX 2>&1)
+
+  if echo "$ping_result" | grep -q "Temporary failure in name resolution"; then
+    echo "Ping from vm-${count.index} to vm-$TARGET_VM_INDEX had a Temporary failure in name resolution" > /tmp/ping_result_vm-${count.index}.txt
+  elif echo "$ping_result" | grep -q 'received' && echo "$ping_result" | awk -F',' '{ print $2 }' | awk '{ print $1 }' | grep -q "0"; then
+    echo "Ping from vm-${count.index} to vm-$TARGET_VM_INDEX failed" > /tmp/ping_result_vm-${count.index}.txt
+  else
+    echo "Ping from vm-${count.index} to vm-$TARGET_VM_INDEX succeeded" > /tmp/ping_result_vm-${count.index}.txt
   fi
   EOT
+
 }
 
 resource "null_resource" "aggregate_ping_results" {
