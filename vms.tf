@@ -55,8 +55,8 @@ resource "null_resource" "aggregate_ping_results" {
     command = <<-EOT
       bash -c '
       # Loop through each VM and download the file
-      # Wait for 60 seconds to ensure VMs are up
-      sleep 60
+      # Wait for 30 seconds to ensure VMs are up
+      sleep 30
       for i in $(seq 0 $((${var.number_of_vms} - 1))); do
         gcloud compute scp --zone=us-central1-a "vm-$i:/tmp/ping_result_vm-$i.txt" "/tmp/ping_result_vm-$i.txt"
       done
