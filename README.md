@@ -16,26 +16,32 @@ SSH Key: This script uses the SSH key located at ~/.ssh/id_rsa.pub. Ensure that 
 Usage
 
 1. Clone the Repository
-   git clone <repository_url>
-
+   ```
+   git clone https://github.com/gculea/gcp_instance_terraform.git
+   ```
 2. Navigate to the Repository
+   ```
    cd path/to/terraform-folder
-
+   ```
 3. Initialize Terraform
+   ```
    terraform init
-   
+   ```   
 4. Plan Infrastructure
+   ```
    terraform plan
-
+   ```
 5. Apply Infrastructure
+   ```
    terraform apply
-
+   ```
 6. Aggregate Results
    This code includes a null_resource to download the ping results from each instance and aggregates them into a file called aggregated_ping_results.txt.
 
 7. Destroy Infrastructure
+   ```
    terraform destroy
-
+   ```
 Variables
  * number_of_vms: The number of VMs to create (Default is set in variables.tf)
  * vm_flavor: The machine type for the VMs (Default is set in variables.tf)
