@@ -9,3 +9,13 @@ output "admin_passwords" {
   }
   sensitive = true
 }
+
+output "vm_external_details" {
+  value = {for instance in google_compute_instance.default : instance.name => instance.network_interface[0].access_config[0].nat_ip}
+  description = "Map of VM names to their external IP addresses."
+}
+
+output "vm_internal_details" {
+  value = {for instance in google_compute_instance.default : instance.name => instance.network_interface[0].network_ip}
+  description = "Map of VM names to their internal IP addresses."
+}
